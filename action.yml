@@ -1,12 +1,12 @@
 name: test_action
 description: 'This action is to test'
 author: 'GitHub'
-# inputs: 
-#   myInput:
-#     description: 'Input to use'
-#     default: 'world'
+inputs: 
+  myInput:
+    description: 'Input to use'
+    default: 'world'
 runs:
   using: 'composite'
   steps:
-    - run: echo "#### TEST STEP"
+    - run: echo "#### TEST STEP ${{ inputs.myInput }}"
       shell: bash
