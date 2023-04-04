@@ -6,4 +6,5 @@ author: 'GitHub'
 #     description: 'Input to use'
 #     default: 'world'
 runs:
+  using: 'composite'
   main: test.sh
