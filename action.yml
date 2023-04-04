@@ -7,4 +7,5 @@ author: 'GitHub'
 #     default: 'world'
 runs:
   using: 'composite'
-  main: test.sh
+  steps:
+    - run: echo "#### TEST STEP"
