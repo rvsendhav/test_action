@@ -14,12 +14,20 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SFTP Deploy
-        uses: mhorbul/sftp-deploy@v3
-        with:
-          server: serv98321748.secure-node.a
-          port: 10422
-          username: uatxxcb9
-          password: wCn+Bj+924LMwk6Z2hgC
-          local-dir: '.github/'
-          remote-dir: '/home/uatxxcb9-ssh/'
+        run: |
+          echo "Starting SFTP deployment..."
+          sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@wCn+Bj+924LMwk6Z2hgC <<EOF
+          put -r .github /home/uatxxcb9-ssh/
+          bye
+          EOF
+          echo "Deployment completed."
+      # - name: SFTP Deploy
+      #   uses: mhorbul/sftp-deploy@v3
+      #   with:
+      #     server: serv98321748.secure-node.a
+      #     port: 10422
+      #     username: uatxxcb9
+      #     password: wCn+Bj+924LMwk6Z2hgC
+      #     local-dir: '.github/'
+      #     remote-dir: '/home/uatxxcb9-ssh/'
           # ${{ secrets.SFTP_SERVER }}
