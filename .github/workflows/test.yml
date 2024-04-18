@@ -24,5 +24,5 @@ jobs:
       run: |
         sudo apt install zip -y
         zip -r test.zip .
-        sshpass -p "ZuFX#thGwpCkNDCkg8-V_b" scp -r -p12488 ./test.zip uatxxcb9-ssh@144.208.12.156:/home/uatxxcb9-ssh
+        sshpass -p "ZuFX#thGwpCkNDCkg8-V_b" scp -o "Protocol=2"  -r -p12488 ./test.zip uatxxcb9-ssh@144.208.12.156:/home/uatxxcb9-ssh
 
