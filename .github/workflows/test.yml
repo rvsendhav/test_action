@@ -13,11 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install SSH Client
+        run: sudo apt-get install -y openssh-client
+
       - name: SFTP Deploy
         run: |
           echo "Starting SFTP deployment..."
-          sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@wCn+Bj+924LMwk6Z2hgC <<EOF
-          put -r .github /home/uatxxcb9-ssh/
+          echo "wCn+Bj+924LMwk6Z2hgC" | sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@serv98321748.secure-node.at <<EOF
+          put -r ./path/to/local/directory ./path/to/remote/directory
           bye
           EOF
           echo "Deployment completed."
