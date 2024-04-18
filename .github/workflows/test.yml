@@ -1,0 +1,28 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # env:
+    #     CI: false
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # - name: Install SSH key
+    #   uses: webfactory/ssh-agent@v0.5.3
+    #   with:
+    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy application
+      run: |
+        sudo apt install zip -y
+        zip -r test.zip .
+        sshpass -p "ZuFX#thGwpCkNDCkg8-V_b" scp -r -p12488 ./test.zip uatxxcb9-ssh@144.208.12.156:/home/uatxxcb9-ssh
+
