@@ -18,12 +18,13 @@ jobs:
 
       - name: SFTP Deploy
         run: |
-          echo "Starting SFTP deployment..."
-          echo "wCn+Bj+924LMwk6Z2hgC" | sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@serv98321748.secure-node.at <<EOF
-          put -r .github /home/uatxxcb9-ssh/
-          bye
-          EOF
-          echo "Deployment completed."
+          curl ifconfig.me
+          # echo "Starting SFTP deployment..."
+          # echo "wCn+Bj+924LMwk6Z2hgC" | sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@serv98321748.secure-node.at <<EOF
+          # put -r .github /home/uatxxcb9-ssh/
+          # bye
+          # EOF
+          # echo "Deployment completed."
       # - name: SFTP Deploy
       #   uses: mhorbul/sftp-deploy@v3
       #   with:
