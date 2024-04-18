@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "Starting SFTP deployment..."
           echo "wCn+Bj+924LMwk6Z2hgC" | sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@serv98321748.secure-node.at <<EOF
-          put -r ./path/to/local/directory ./path/to/remote/directory
+          put -r .github /home/uatxxcb9-ssh/
           bye
           EOF
           echo "Deployment completed."
