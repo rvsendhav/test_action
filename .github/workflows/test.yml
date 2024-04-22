@@ -1,6 +1,7 @@
 name: Deploy to Server
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -18,20 +19,8 @@ jobs:
 
       - name: SFTP Deploy
         run: |
-          curl ifconfig.me
-          # echo "Starting SFTP deployment..."
-          # echo "wCn+Bj+924LMwk6Z2hgC" | sftp -o StrictHostKeyChecking=no -P 10422 uatxxcb9@serv98321748.secure-node.at <<EOF
-          # put -r .github /home/uatxxcb9-ssh/
-          # bye
-          # EOF
-          # echo "Deployment completed."
-      # - name: SFTP Deploy
-      #   uses: mhorbul/sftp-deploy@v3
-      #   with:
-      #     server: serv98321748.secure-node.a
-      #     port: 10422
-      #     username: uatxxcb9
-      #     password: wCn+Bj+924LMwk6Z2hgC
-      #     local-dir: '.github/'
-      #     remote-dir: '/home/uatxxcb9-ssh/'
-          # ${{ secrets.SFTP_SERVER }}
+          if ${{ github.event.pull_request.base.ref == 'main' }}; then
+            echo "Test"
+          elif ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}; then
+            echo "Live"
+          fi
