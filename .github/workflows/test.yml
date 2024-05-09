@@ -1,10 +1,20 @@
-name: Deploy to Server
+name: Deploy to AWS Beanstalk
+run-name: "Deploy to ${{ github.event.inputs.environment }} from ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
 
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: choice
+        description: Choose Env to deploy
+        default: 'Staging'
+        options:
+        - Staging
+        - Prod
 
 jobs:
   deploy:
