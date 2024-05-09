@@ -1,5 +1,5 @@
 name: Deploy to AWS Beanstalk
-run-name: "Deploy to ${{ github.event.inputs.environment }} from ${{ github.head_ref }}"
+run-name: "Deploy to ${{ github.event.inputs.environment }} from ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
 
 on:
   pull_request:
