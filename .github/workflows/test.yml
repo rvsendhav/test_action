@@ -25,6 +25,8 @@ jobs:
       #       echo "Live"
       #     fi
       - name: Deployment Status
+        env:
+          DEPLOYMENT_STATUS: Failed
         run: |
             echo "$DEPLOYMENT_STATUS"
             if $DEPLOYMENT_STATUS == "Failed"
