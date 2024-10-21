@@ -17,10 +17,17 @@ jobs:
       # - name: Install SSH Client
       #   run: sudo apt-get install -y openssh-client
 
-      - name: SFTP Deploy
+      # - name: SFTP Deploy
+      #   run: |
+      #     if ${{ github.event.pull_request.base.ref == 'main' }}; then
+      #       echo "Test"
+      #     elif ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}; then
+      #       echo "Live"
+      #     fi
+      - name: Deployment Status
         run: |
-          if ${{ github.event.pull_request.base.ref == 'main' }}; then
-            echo "Test"
-          elif ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}; then
-            echo "Live"
-          fi
+            echo "$DEPLOYMENT_STATUS"
+            if $DEPLOYMENT_STATUS == "Failed"
+            then
+              exit 1
+            fi
