@@ -3,7 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       application:
-      	description: 'choose to application'
+        description: 'Choose applicaion'
+        default: 'staging'
         required: true
         type: choice
         options:
