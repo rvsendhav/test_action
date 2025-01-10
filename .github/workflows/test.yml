@@ -1,4 +1,5 @@
-name: "Deploying ${{ github.event.inputs.application }} to env ${{ github.event.inputs.environment }} from ${{ github.ref_name }}"
+name: Deploy
+run-name: "Deploying ${{ github.event.inputs.application }} to env ${{ github.event.inputs.environment }} from ${{ github.ref_name }}"
 on:
   workflow_dispatch:
     inputs:
