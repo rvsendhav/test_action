@@ -1,35 +1,48 @@
-name: Deploy to Server
-
+name: "Deploying ${{ github.event.inputs.application }} to env ${{ github.event.inputs.environment }} from ${{ github.ref_name }}"
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    inputs:
+      application:
+      	description: 'choose to application'
+        required: true
+        type: choice
+        options:
+        - backend
+        - admin
+      environment:
+        description: 'Deploy to env'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+        - staging
+        - prod
 
 jobs:
-  deploy:
+  Deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: '0'
 
-      # - name: Install SSH Client
-      #   run: sudo apt-get install -y openssh-client
-
-      # - name: SFTP Deploy
-      #   run: |
-      #     if ${{ github.event.pull_request.base.ref == 'main' }}; then
-      #       echo "Test"
-      #     elif ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}; then
-      #       echo "Live"
-      #     fi
-      - name: Deployment Status
-        env:
-          DEPLOYMENT_STATUS: Failed
+      - name: prepare package
         run: |
-            echo "$DEPLOYMENT_STATUS"
-            if [ "$DEPLOYMENT_STATUS" == "Failed" ];
-            then
-              exit 1
-            fi
+          sudo apt install zip -y
+          sudo zip -r fs_${{ inputs.application }}_${{ inputs.environment }}.zip *
+          echo "#########################################################"
+          ls
+
+      # - name: upload s3
+      #   run: |
+      #     aws s3 cp fs_backend.zip s3://codedeploy-fs-backend/fs_backend.zip
+
+      # - name: create codedeploy deployment
+      #   run: |
+      #     aws deploy create-deployment \
+      #     --application-name fs-backend \
+      #     --deployment-config-name CodeDeployDefault.OneAtATime \
+      #     --deployment-group-name fs-backend-group \
+      #     --description "Deployment" \
+      #     --s3-location bucket=codedeploy-fs-backend,bundleType=zip,key=fs_backend.zip
