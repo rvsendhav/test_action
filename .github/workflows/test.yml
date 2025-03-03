@@ -1,50 +1,61 @@
 name: Deploy
 run-name: "Deploying ${{ github.event.inputs.application }} to env ${{ github.event.inputs.environment }} from ${{ github.ref_name }}"
 on:
-  workflow_dispatch:
-    inputs:
-      application:
-        description: 'Choose applicaion'
-        default: 'staging'
-        required: true
-        type: choice
-        options:
-        - backend
-        - admin
-      environment:
-        description: 'Deploy to env'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-        - staging
-        - prod
+  push:
+    branches:
+      main
 
 jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-            fetch-depth: '0'
-
-      - name: prepare package
+      - name: Set up SSH
         run: |
-          sudo apt install zip -y
-          sudo zip -r fs_${{ inputs.application }}_${{ inputs.environment }}.zip *
-          echo "#########################################################"
-          ls
+          mkdir -p ~/.ssh
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----
+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
+-----END OPENSSH PRIVATE KEY-----" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 194.238.17.142 >> ~/.ssh/known_hosts
 
-      # - name: upload s3
-      #   run: |
-      #     aws s3 cp fs_backend.zip s3://codedeploy-fs-backend/fs_backend.zip
-
-      # - name: create codedeploy deployment
-      #   run: |
-      #     aws deploy create-deployment \
-      #     --application-name fs-backend \
-      #     --deployment-config-name CodeDeployDefault.OneAtATime \
-      #     --deployment-group-name fs-backend-group \
-      #     --description "Deployment" \
-      #     --s3-location bucket=codedeploy-fs-backend,bundleType=zip,key=fs_backend.zip
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no root@194.238.17.142 << 'EOF'
+            cd /home/
+            mkdir test_github_ssh
+          EOF
