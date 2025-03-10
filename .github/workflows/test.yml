@@ -17,8 +17,10 @@ jobs:
           ssh-keyscan -H 194.238.17.142 >> ~/.ssh/known_hosts
 
       - name: Deploy via SSH
+        env:
+          DIRW: test_dir
         run: |
           ssh -o StrictHostKeyChecking=no root@194.238.17.142 << 'EOF'
             cd /home/
-            mkdir test_github_ssh
+            mkdir $DIRW
           EOF
